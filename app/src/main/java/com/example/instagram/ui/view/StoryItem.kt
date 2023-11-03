@@ -22,7 +22,8 @@ import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.instagram.R
-import com.example.instagram.data.Story
+import com.example.instagram.data.model.Story
+import com.example.instagram.data.repository.stories
 import com.example.instagram.ui.theme.StoryCircleColor
 import com.example.instagram.ui.theme.spacingSmall
 
@@ -63,5 +64,5 @@ fun StoryItem(story: Story) {
 @Preview(showBackground = true)
 @Composable
 fun StoryItemPreview() {
-    StoryItem(story = Story(userNickName = "", userAvatar = ""))
+    StoryItem(story = stories[0])
 }
