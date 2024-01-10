@@ -1,6 +1,8 @@
 package com.example.instagram.ui.view
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,13 +10,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -33,9 +39,17 @@ import com.example.instagram.ui.theme.spacingSmall
 @Composable
 fun FeedItem(feed: Feed) {
 
+    val likeIcon = R.drawable.ic_notification
+    val messageIcon = R.drawable.ic_message
+    val commentIcon = R.drawable.ic_comment
+    val bookmarkIcon = R.drawable.ic_bookmark
+
     val userAvatarContentDesc = stringResource(R.string.content_description_feed_avatar)
     val feedImageContentDesc = stringResource(R.string.content_description_feed_Image)
-
+    val likeContentDesc = stringResource(R.string.button_like_content_description)
+    val messageContentDesc = stringResource(R.string.button_message_content_description)
+    val commentContentDesc = stringResource(R.string.button_comment_content_description)
+    val bookmarkContentDesc = stringResource(R.string.button_bookmark_content_description)
 
     Column(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
 
@@ -89,6 +103,54 @@ fun FeedItem(feed: Feed) {
             contentScale = ContentScale.Crop
 
         )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp)
+                    .padding(start = spacingMedium)
+                    .padding(top = spacingLarge)
+
+
+            ) {
+
+                Image(
+                    painter = painterResource(id = likeIcon),
+                    contentDescription = likeContentDesc,
+                    modifier = Modifier
+                        .size(40.dp)
+                        .padding(end = spacingLarge)
+                )
+
+                Image(
+                    painter = painterResource(id = messageIcon),
+                    contentDescription = messageContentDesc,
+                    modifier = Modifier
+                        .size(40.dp)
+                        .padding(end = spacingLarge)
+                )
+
+                Image(
+                    painter = painterResource(id = commentIcon),
+                    contentDescription = commentContentDesc,
+                    modifier = Modifier
+                        .size(40.dp)
+                        .padding(end = spacingLarge)
+                )
+
+                Image(
+                    painter = painterResource(id = bookmarkIcon),
+                    contentDescription = bookmarkContentDesc,
+                    modifier = Modifier
+                        .size(40.dp)
+                        .padding(end = spacingLarge)
+                        .weight(1f)
+                        .wrapContentWidth(align = Alignment.End)
+                )
+
+
+            }
+
+        }
 
     }
 
