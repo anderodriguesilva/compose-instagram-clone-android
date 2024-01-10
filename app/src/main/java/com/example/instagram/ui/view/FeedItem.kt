@@ -154,7 +154,6 @@ fun FeedItem(feed: Feed) {
 
     }
 
-}
 
 @Preview(showBackground = true)
 @Composable
