@@ -1,8 +1,8 @@
 package com.example.instagram.ui.view
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
@@ -22,15 +21,19 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.instagram.R
 import com.example.instagram.data.model.Feed
+import com.example.instagram.ui.theme.Gray
 import com.example.instagram.ui.theme.spacingLarge
 import com.example.instagram.ui.theme.spacingMedium
 import com.example.instagram.ui.theme.spacingSmall
@@ -103,56 +106,84 @@ fun FeedItem(feed: Feed) {
             contentScale = ContentScale.Crop
 
         )
-            Row(
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .padding(start = spacingMedium)
+                .padding(top = spacingLarge)
+
+
+        ) {
+
+            FeedIcon(icon = likeIcon, ContentDescription = likeContentDesc)
+
+            FeedIcon(icon = messageIcon, ContentDescription = messageContentDesc)
+
+            FeedIcon(icon = commentIcon, ContentDescription = commentContentDesc)
+
+            Image(
+                painter = painterResource(id = bookmarkIcon),
+                contentDescription = bookmarkContentDesc,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(40.dp)
-                    .padding(start = spacingMedium)
-                    .padding(top = spacingLarge)
-
-
-            ) {
-
-                Image(
-                    painter = painterResource(id = likeIcon),
-                    contentDescription = likeContentDesc,
-                    modifier = Modifier
-                        .size(40.dp)
-                        .padding(end = spacingLarge)
-                )
-
-                Image(
-                    painter = painterResource(id = messageIcon),
-                    contentDescription = messageContentDesc,
-                    modifier = Modifier
-                        .size(40.dp)
-                        .padding(end = spacingLarge)
-                )
-
-                Image(
-                    painter = painterResource(id = commentIcon),
-                    contentDescription = commentContentDesc,
-                    modifier = Modifier
-                        .size(40.dp)
-                        .padding(end = spacingLarge)
-                )
-
-                Image(
-                    painter = painterResource(id = bookmarkIcon),
-                    contentDescription = bookmarkContentDesc,
-                    modifier = Modifier
-                        .size(40.dp)
-                        .padding(end = spacingLarge)
-                        .weight(1f)
-                        .wrapContentWidth(align = Alignment.End)
-                )
-
-
-            }
-
+                    .size(40.dp)
+                    .padding(end = spacingLarge)
+                    .weight(1f)
+                    .wrapContentWidth(align = Alignment.End)
+            )
         }
 
+        Row(
+            modifier = Modifier
+                .padding(horizontal = spacingSmall)
+                .padding(top = spacingLarge)
+        ) {
+
+            val description = buildAnnotatedString {
+                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)){
+                    append(feed.userNickName)
+                }
+                append(" ")
+                append(feed.description)
+            }
+
+            Text(
+                text = description,
+                modifier = Modifier
+                    .padding(horizontal = spacingMedium),
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Start
+            )
+        }
+
+        Text(
+            text = feed.postedAgo,
+            modifier = Modifier
+                .padding(start = 12.dp)
+                .padding(top = spacingSmall),
+            maxLines = 1,
+            color = Gray,
+            overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.Start
+        )
+
     }
+
+}
+
+@Composable
+fun FeedIcon(
+    @DrawableRes icon: Int,
+    ContentDescription: String
+) {
+    Image(
+        painter = painterResource(id = icon),
+        contentDescription = ContentDescription,
+        modifier = Modifier
+            .size(40.dp)
+            .padding(end = spacingLarge)
+    )
+}
 
 
 @Preview(showBackground = true)
